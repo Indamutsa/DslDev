@@ -1,0 +1,9 @@
+grammar org.workflow.dsl.Workflow with org.eclipse.xtext.common.Terminals
+
+generate workflow "http://www.workflow.org/dsl/Workflow"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

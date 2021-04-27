@@ -1,0 +1,163 @@
+grammar org.example.workflow.Workflowmodel with org.eclipse.xtext.xbase.Xbase
+//with org.eclipse.xtext.common.Terminals // 
+
+generate workflowmodel "http://www.example.org/workflow/Workflowmodel"
+
+ 
+ServiceWorkflow:
+	imports+=Import*
+	features+=Feature*	
+	workflows+=Workflow
+;
+
+/**
+ * Import rule
+ */
+Import:
+	'include' name=ValidID
+;
+
+// ------------------------
+/**
+ * Feature rule
+ */
+Feature:
+	varExpressions+=AssignmentStatement*
+	statements += Statement*
+	loops+=Loop*
+	operations+=Operation*
+	services+=Service
+;
+
+//-------
+
+AssignmentStatement:
+	'Define' VariableType name=ID '=' name=ID | 'type:' ArtifactType ',' 'link:' name=ID | 'type:' EventType	
+;
+
+VariableType:
+	typeName=('var'| 'boolean' | 'Artifact' | 'Event')
+;
+
+EventType:
+	typeName=( 'start'|'end'| 'error' | 'complete')
+;
+
+ArtifactType:
+	typeName=('ECORE'| 'XMI'|'FLEXMI')
+;
+
+// --------
+Statement:
+	PrintStatement | AssignmentStatement
+;
+
+PrintStatement:
+	'print' expression=Expression
+;
+
+Expression:
+	{intConstant} value=INT |
+	{StringConstant} value=STRING |
+	{BoolConstant} value=("false"| "true") |
+	{fieldRef} field=[Field]
+;
+
+Field:
+	type=VariableType
+	name=ID
+;
+
+// -------
+
+
+Loop:
+	'Loop:' 'if' '(' Condition ')' '{'
+		features+=Feature
+	'}'
+;
+
+
+Condition:
+	expression=Expression ('==' | '!=' | '>' | '<' | '>=' | '<=') expression=Expression
+;
+
+// ------
+
+
+Operation:
+	"function" name=ID "(" parameters=AttributeList? ")" 
+		"{" 
+			features+=Feature* 
+		"}";
+
+
+AttributeList:
+	value+=RelAttribute (',' value+=RelAttribute)*;
+
+
+RelAttribute:
+	name=ID ':' reference=VariableType;
+
+// -----
+
+Service:
+	'Service' name=ID ':'
+		'type:' ('Transform' | 'Validate' | 'Compare'| 'Query')
+		'input:' specificParam=SpecificParam
+		'dsl:' path=STRING
+		'output:' path=QualifiedName
+		'outputEvent' fileName=STRING 
+;
+
+
+
+SpecificParam:
+	'[' ('inputModel: ' expression=Expression) ']'
+;
+
+
+
+// *********************************************
+
+
+/**
+ * Workflow rule
+ */
+ 
+// --------------------------------------------------------------------------- 
+Workflow:
+	'Workflow' name=ID 'type:' ('SEQUENCE' | 'PARALLEL')
+	'{'
+		steps+=Step
+	'}'
+	'EXECUTE' name=ID'()'
+;
+
+
+
+Step:
+	'Step' name=ID ':' 
+			features+=Feature
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

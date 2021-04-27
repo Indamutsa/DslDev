@@ -1,0 +1,131 @@
+@namespace(uri="http://www.example.org/workflow/Workflowmodel", prefix="workflowmodel")
+package workflowmodel;
+
+class ServiceWorkflow {
+	val Import[*] imports;
+	val Feature[*] features;
+	val Workflow[*] workflows;
+}
+
+class Import {
+	attr String name;
+}
+
+class Feature {
+	val AssignmentStatement[*] varExpressions;
+	val Statement[*] statements;
+	val Loop[*] loops;
+	val Operation[*] operations;
+	val Service[*] services;
+}
+
+class AssignmentStatement extends Statement {
+	attr String typeName;
+}
+
+class VariableType extends AssignmentStatement {
+	ref Field field;
+	attr String name;
+}
+
+class EventType extends AssignmentStatement {
+}
+
+class ArtifactType extends AssignmentStatement {
+	attr String name;
+}
+
+class ModelArtifact extends ArtifactType {
+}
+
+class DslScript extends ArtifactType {
+}
+
+class Statement {
+}
+
+class PrintStatement extends Statement {
+	val Expression expression;
+}
+
+class Expression {
+}
+
+class Field {
+	val VariableType type;
+	attr String name;
+}
+
+class Loop {
+}
+
+class Condition extends Loop {
+	val Feature[*] features;
+	val Expression expr;
+	val Expression expr1;
+}
+
+class Operation {
+	attr String name;
+	val AttributeList parameters;
+	val Feature[*] features;
+}
+
+class AttributeList {
+	val RelAttribute[*] value;
+}
+
+class RelAttribute {
+	attr String name;
+	val VariableType reference;
+}
+
+class Service {
+	attr String name;
+	val SpecificParam specificParam;
+	attr String path;
+	val EventType event;
+}
+
+class SpecificParam {
+	ref Field field1;
+	ref Field field2;
+}
+
+class TransformParam extends SpecificParam {
+	ref Field field;
+}
+
+class Param extends SpecificParam {
+}
+
+class CompareParam extends SpecificParam {
+}
+
+class Workflow {
+	attr String name;
+	val Step[*] steps;
+	ref Field field;
+}
+
+class Step {
+	attr String name;
+	val Feature[*] features;
+}
+
+class intConstant extends Expression {
+	attr int value;
+}
+
+class StringConstant extends Expression {
+	attr String value;
+}
+
+class BoolConstant extends Expression {
+	attr String value;
+}
+
+class fieldRef extends Expression {
+	ref Field field;
+}
+

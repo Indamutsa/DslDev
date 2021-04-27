@@ -1,0 +1,146 @@
+@namespace(uri="http://www.example.org/workflow/Workflowmodel", prefix="workflowmodel")
+package workflowmodel;
+
+class ServiceWorkflow {
+	val TheClass[*] entities;
+	val Operation[*] operations;
+}
+
+class TheClass {
+	attr String name;
+	ref TheClass superType;
+	val Attribute[*] attributes;
+}
+
+class Operation {
+	attr String name;
+	val RelAttrubutesList parameters;
+	val Statement[*] statements;
+}
+
+class Statement {
+}
+
+class Variable extends Statement {
+	val VariableDeclaration declaration;
+	val Expression expression;
+}
+
+class Relational extends Statement {
+	attr String entity;
+	val ExpressionsModel expressions;
+}
+
+class Update extends Relational {
+	val VariableInit[*] variableList;
+}
+
+class Delete extends Relational {
+}
+
+class Create extends Relational {
+}
+
+class ExpressionsModel {
+	val ConditionElements[*] elements;
+}
+
+class ConditionElements {
+	attr String compareName;
+	val Expression expr;
+}
+
+class VariableInit {
+	attr String name;
+	val Expression expression;
+}
+
+class Expression {
+}
+
+class RelAttrubutesList {
+	val RelAttribute[*] value;
+}
+
+class RelAttribute {
+	attr String name;
+	val TypeReference reference;
+}
+
+class Attribute {
+	attr String modificator;
+	val VariableDeclaration variable;
+}
+
+class VariableDeclaration {
+	attr String name;
+	val TypeReference type;
+}
+
+class TypeReference {
+	attr String primitive;
+	val EntityType entity;
+}
+
+class EntityType {
+	ref TheClass entity;
+}
+
+class Or extends Expression {
+	val Expression left;
+	val Expression right;
+}
+
+class And extends Expression {
+	val Expression left;
+	val Expression right;
+}
+
+class Equality extends Expression {
+	val Expression left;
+	attr String ~op;
+	val Expression right;
+}
+
+class Comparison extends Expression {
+	val Expression left;
+	attr String ~op;
+	val Expression right;
+}
+
+class Plus extends Expression {
+	val Expression left;
+	val Expression right;
+}
+
+class Minus extends Expression {
+	val Expression left;
+	val Expression right;
+}
+
+class IntConstant extends Expression {
+	attr int value;
+}
+
+class StringConstant extends Expression {
+	attr String value;
+}
+
+class BoolConstant extends Expression {
+	attr String value;
+}
+
+class VariableRef extends Expression {
+	ref Variable variable;
+}
+
+class MulOrDiv extends Expression {
+	val Expression left;
+	attr String ~op;
+	val Expression right;
+}
+
+class Not extends Expression {
+	val Expression expression;
+}
+

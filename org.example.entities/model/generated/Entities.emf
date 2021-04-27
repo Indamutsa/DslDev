@@ -1,0 +1,35 @@
+@namespace(uri="http://www.example.org/entities/Entities", prefix="entities")
+package entities;
+
+class Model {
+	val Entity[*] entities;
+}
+
+class Entity {
+	attr String name;
+	ref Entity suprtType;
+	val Attribute[*] attributes;
+}
+
+class Attribute {
+	val AttributeType type;
+	attr String name;
+}
+
+class AttributeType {
+	val ElementType elementType;
+	attr boolean array;
+	attr int length;
+}
+
+class ElementType {
+}
+
+class BasicType extends ElementType {
+	attr String typeName;
+}
+
+class EntityType extends ElementType {
+	ref Entity entity;
+}
+

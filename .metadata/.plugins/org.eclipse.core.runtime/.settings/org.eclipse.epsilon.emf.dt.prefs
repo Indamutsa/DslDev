@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+metamodels=/org.example.entities/model/generated/Entities.ecore;/org.workflow.dsl/model/generated/Workflowmodel.ecore

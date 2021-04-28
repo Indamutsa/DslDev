@@ -7,19 +7,16 @@ import com.google.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.extensions.InjectionExtension;
 import org.eclipse.xtext.testing.util.ParseHelper;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.example.workflow.tests.WorkflowmodelInjectorProvider;
 import org.example.workflow.workflowmodel.ServiceWorkflow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(InjectionExtension.class)
-@InjectWith(WorkflowmodelInjectorProvider.class)
 @SuppressWarnings("all")
 public class WorkflowmodelParsingTest {
   @Inject

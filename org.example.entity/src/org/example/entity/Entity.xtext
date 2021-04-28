@@ -1,0 +1,74 @@
+grammar org.example.entities.Entities with org.eclipse.xtext.common.Terminals
+
+generate entities "http://www.example.org/entities/Entities"
+
+
+/**
+ * Entities Dsl is a collections of entity elements
+ * the collection is stored in a feature called entities
+ * It is a collection because +=
+ * 
+ * It can represent 0 or more entities by using *
+ * If we want to represent at least one entity, we can use +
+ */
+Model: entities +=Entity*;
+
+Entity:
+	
+	/**
+	 * String literal are defined by single or double quotes
+	 * They define the keyword of the DSL
+	 * In this rule, we have 4 keyword( "entity, extends, (, )") 
+	 * They are reserved for the language
+	 * 
+	 * 
+	 * Therefore a valid syntax starts with the key entity
+	 * followed by ID(identifier = name of the entity given by the user)
+	 * 
+	 * ID is inherited from Terminals
+	 * 
+	 * ? this character represents an optional part
+	 * 
+	 */
+	'entity' name = ID ('extends' suprtType=[Entity])? '{'
+		attributes += Attribute*
+	'}'
+;
+
+
+
+
+Attribute:
+	/**
+	 * This type of assignment is a boolean since we used ?=
+	 * 
+	 * Here we can have entity name will be stored in the type feature
+	 * and ID will be stored in name
+	 * 
+	 * if we have [], then it will return true that is it an array, 
+	 * otherwise, it is a single assignment
+	 * 
+	 */
+	type=AttributeType name=ID ';';
+
+AttributeType:
+	elementType=ElementType (array ?='[' (length=INT)? ']')?;
+	
+ElementType:
+	BasicType | EntityType;
+
+BasicType:
+	typeName=('string'|'int'|'boolean')
+;	
+
+
+EntityType:
+	entity=[Entity]
+;
+
+	
+	//entity=[Entity] (array ?='[' (length=INT)? ']' )?;
+	
+	//type=[Entity] (array ?='[' (length=INT)? ']')? name=ID ';';
+	
+	

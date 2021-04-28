@@ -15,4 +15,4 @@ Require-Bundle: org.workflow.dsl.ui,
  org.eclipse.xtext.ui.testing,
  org.eclipse.ui.workbench;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.example.workflow.ui.tests;x-internal=true
+

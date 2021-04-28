@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
 
 @ExtendWith(InjectionExtension)
-@InjectWith(WorkflowmodelInjectorProvider)
 class WorkflowmodelParsingTest {
 	@Inject
 	ParseHelper<ServiceWorkflow> parseHelper
